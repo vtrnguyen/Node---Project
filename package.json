@@ -10,8 +10,9 @@
     "nodemon": "^3.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect src/server.js"
+    "start": "nodemon --inspect src/server.js",
+    "watch": "node-sass --watch src/resources/scss/app.scss src/public/css/app.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/vtrnguyen/book-manager/issues"
   },
-  "homepage": "https://github.com/vtrnguyen/book-manager#readme"
+  "homepage": "https://github.com/vtrnguyen/book-manager#readme",
+  "devDependencies": {
+    "mongoose": "^7.6.3",
+    "mongoose-delete": "^1.0.1",
+    "mongoose-slug-updater": "^3.3.0",
+    "node-sass": "^9.0.0"
+  }
 }
