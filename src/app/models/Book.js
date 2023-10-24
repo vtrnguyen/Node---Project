@@ -9,6 +9,7 @@ const Book = new Schema ({
     price: { type: Number, },
     page: { type: Number, },
     image: { type: String },
+    author: { type: String },
     slug: { type: String, slug: 'name', unique: true },
 }, {
     timestamps: true,

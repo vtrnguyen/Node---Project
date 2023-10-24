@@ -1,7 +1,7 @@
 <table class="table mt-4">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">STT</th>
       <th scope="col">Tên sách</th>
       <th scope="col">Mô tả</th>
       <th scope="col">Thời gian đăng tải</th>
@@ -10,10 +10,10 @@
   <tbody>
     {{#each books}}
       <tr>
-        <th scope="row">1</th>
+        <th scope="row">{{ sum @index 1}}</th>
         <td>{{this.name}}</td>
         <td>{{this.description}}</td>
-        {{!-- <td>{{this.updatedAt}}</td> --}}
+        <td>{{this.updatedAt}}</td>
       </tr>
       {{else}}
       <td colspan="5" class="text-content">

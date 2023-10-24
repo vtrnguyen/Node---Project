@@ -13,6 +13,19 @@ class BookController {
             })
             .catch(next);
     }
+
+    // [GET] /books/create
+    create(req, res, next) {
+        res.render('books/create');
+    }
+
+    // [POST] /books/store
+    store(req, res, next) {
+        const book = new Book(req.body);
+        book.save()
+            .then(() => res.redirect('/'))
+            .catch(next);
+    }
 }
 
 module.exports = new BookController();
