@@ -14,6 +14,10 @@
         <td>{{this.name}}</td>
         <td>{{this.description}}</td>
         <td>{{this.updatedAt}}</td>
+        <td>
+            <a href="/books/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+            <a href="#" class="btn btn-link">Xóa</a>
+        </td>
       </tr>
       {{else}}
       <td colspan="5" class="text-content">

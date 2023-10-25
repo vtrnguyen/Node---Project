@@ -26,6 +26,22 @@ class BookController {
             .then(() => res.redirect('/'))
             .catch(next);
     }
+
+    // [GET] /books/:id/edit
+    edit(req, res, next) {
+        Book.findById(req.params.id)
+            .then(book => res.render('books/edit', {
+                book: mongooseToObject(book),
+            }))
+            .catch(next);
+    }
+
+    // [PUT] /books/:id
+    update(req, res, next) {
+        Book.updateOne({ _id: req.params.id }, req.body)
+            .then(() => res.redirect('/me/stored/books'))
+            .catch(next);
+    }
 }
 
 module.exports = new BookController();
