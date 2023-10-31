@@ -22,6 +22,18 @@ class MeController {
     logOut(req, res, next) {
         res.render('me/log-out');
     }
+
+    // [GET] /trash/books
+    trashBooks(req, res, next) { 
+        Book.findWithDeleted({ deleted: true })
+            .then((books) => 
+                res.render('me/trash-books', {
+                    books: multipleMongooseToObject(books),
+                }),
+            )
+            .catch(next);
+    }
+
 }
 
 module.exports = new MeController();

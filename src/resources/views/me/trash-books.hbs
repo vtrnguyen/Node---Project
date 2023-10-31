@@ -1,8 +1,7 @@
 <table class="table mt-4">
 
   <div class="mt-4">
-    <h3>Danh sách đã đăng tải</h3>
-    <a href="/me/trash/books" style="text-decoration: underline;">Thùng rác</a>
+    <h3>Thùng rác của tôi</h3>
   </div>
 
   <thead class="thead-light">
@@ -10,7 +9,7 @@
       <th scope="col">STT</th>
       <th scope="col">Tên sách</th>
       <th scope="col">Mô tả</th>
-      <th scope="col">Thời gian đăng tải</th>
+      <th scope="col">Thời gian xóa</th>
     </tr>
   </thead>
   <tbody>
@@ -19,16 +18,16 @@
         <th scope="row">{{ sum @index 1}}</th>
         <td>{{this.name}}</td>
         <td>{{this.description}}</td>
-        <td>{{this.updatedAt}}</td>
+        <td>{{this.deletedAt}}</td>
         <td>
-            <a href="/books/{{this._id}}/edit" class="btn btn-link">Sửa</a>
+            <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Khôi phục</a>
             <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-book-model">Xóa</a>
         </td>
       </tr>
       {{else}}
       <td colspan="5" class="text-content">
-        Bạn chưa đăng tải cuốn sách nào.
-        <a href="/books/create">Bấm vào đây để đăng sách
+        Bạn chưa xóa cuốn sách nào.
+        <a href="/me/stored/books">Nhấn để xem sách của tôi.
       </td>
     {{/each}}
   </tbody>
@@ -45,11 +44,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Bạn muốn xóa cuốn sách này?</p>
+        <p>Hành động này không thể phục hồi! Bạn có muốn xóa?</p>
       </div>
       <div class="modal-footer">
         <button id="btn-delete-book" type="button" class="btn btn-danger">Xác nhận xóa</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
       </div>
     </div>
   </div>
@@ -57,12 +56,15 @@
 
 {{!-- DELETE HIDDEN CONFIRM --}}
 <form name="delete-book-form" method="POST"></form>
+<form name="restore-book-form" method="POST"></form>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var bookId;
     var deleteForm = document.forms['delete-book-form'];
+    var restoreForm = document.forms['restore-book-form'];
     var btnDeleteBook = document.querySelector('#btn-delete-book');
+    var btnRestoreBook = $('.btn-restore');
 
     $('#delete-book-model').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
@@ -70,9 +72,16 @@
     });
 
     btnDeleteBook.onclick = () => {
-      deleteForm.action = '/books/' + bookId + '?_method=DELETE';
+      deleteForm.action = '/books/' + bookId + '/force?_method=DELETE';
       deleteForm.submit();
     }
+
+    btnRestoreBook.click(function(e) {
+      e.preventDefault();
+      var bookId = $(this).data('id');
+      deleteForm.action = '/books/' + bookId + '/restore?_method=PATCH';
+      deleteForm.submit();
+    })
 
   })
 
